@@ -1,0 +1,31 @@
+<%- include('../partials/header')%>
+    <%- include('navbar')%>
+    <div class="container shadow-lg p-3 mt-5">
+        <h1>Add card</h1>
+        <form class="mt-3 p-2" method="post" action="/addcard">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Card ID</label>
+                <input name="actualId" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <%if(status=="Success"){%>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            swal("Good job!", "Card Added Successfully", "success");
+        </script>
+    <% } %>
+    <%if(status=="Error"){%>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            swal("Error", "Some error occured!", "error");
+        </script>
+    <% } %>
+    <%if(status=="Warning"){%>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            swal("Warning", "<%=message %>", "warning");
+        </script>
+    <% } %>
+<%- include('../partials/footer')%>

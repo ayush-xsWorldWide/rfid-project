@@ -1,0 +1,42 @@
+<%- include('../partials/header')%>
+    <div class="container mt-5">
+        <div class="card mb-3 w-100 p-4 shadow-lg">
+            <div class="row g-0">
+                <div class="col-md-5">
+                    <img src="asserts/logo_black.png" class="img-fluid rounded-start w-100 h-100" alt="...">
+                </div>
+                <div class="col-md-7">
+                    <div class="card-body">
+                        <center>
+                            <h2 class="card-title text-danger">Login</h2>
+                        </center>
+                        <form action="/alogin" method="post">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">User id</label>
+                                <input name="userid" type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Password</label>
+                                <input name="password" type="password" class="form-control" id="exampleInputPassword1">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%if(status=="Error"){%>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            swal("Error", "<%=message %>", "error");
+        </script>
+    <% } %>
+    <%if(status=="Warning"){%>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            swal("Warning", "<%=message %>", "warning");
+        </script>
+    <% } %>
+    <%- include('../partials/footer')%>
