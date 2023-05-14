@@ -29,7 +29,7 @@ app.post('/alogin', adminController.ActionLogin);
 app.get('/logout', adminController.ActionLogout);
 
 app.get('/dashboard', auth.isAuthenticated,adminController.showDashboard);
-
+app.get('/showreg', auth.isAuthenticated, adminController.findAllRegstration);
 
 app.get('/cardstatus/:cardno', cardController.UpdateStatus);
 // add card

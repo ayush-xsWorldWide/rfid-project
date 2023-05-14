@@ -1,12 +1,12 @@
 const AdminCred = require('../model/adminCred');
-
+const RegData = require('../model/visiter');
 
 // utils
 const { decrypt } = require("../utils/crypt");
 const { generateToken } = require("../utils/token");
 
 exports.LoginPage = (req, res) => {
-    return res.render('admin/login',{
+    return res.render('admin/login', {
         status: ""
     });
 }
@@ -14,45 +14,42 @@ exports.LoginPage = (req, res) => {
 exports.ActionLogin = async (req, res) => {
     // console.log(req.body);
     const { userid, password } = req.body;
-    if(!userid || !password){
-        if(!userid){
-            return res.render('admin/login',{
+    if (!userid || !password) {
+        if (!userid) {
+            return res.render('admin/login', {
                 status: "Warning",
                 message: "Enter the user Id"
             });
         }
-        if(!password)
-        {
-            return res.render('admin/login',{
+        if (!password) {
+            return res.render('admin/login', {
                 status: "Warning",
                 message: "Enter the password"
             });
         }
     }
-    try{
-        const data = await AdminCred.findOne({userid});
+    try {
+        const data = await AdminCred.findOne({ userid });
         // console.log(data);
-        if(!data)
-        {
-            return res.render('admin/login',{
+        if (!data) {
+            return res.render('admin/login', {
                 status: "Error",
                 message: "User Doest exist!"
             });
         }
-        if(await decrypt(data.password, password))
-        {
+        if (await decrypt(data.password, password)) {
             let token = generateToken({ userid: data.userid });
             res.cookie("token", token);
             return res.redirect('/dashboard');
         }
-        return res.render('admin/login',{
+        return res.render('admin/login', {
             status: "Error",
             message: "Invald Password!"
         });
     }
-    catch(error){
+    catch (error) {
         console.log(error);
-        return res.render('admin/login',{
+        return res.render('admin/login', {
             status: "Error",
             message: "Server error!"
         });
@@ -60,8 +57,8 @@ exports.ActionLogin = async (req, res) => {
 }
 
 // admin dashboard
-exports.showDashboard = (req,res)=>{
-    return res.render('admin/dashboard',{
+exports.showDashboard = (req, res) => {
+    return res.render('admin/dashboard', {
         user: req.user.userid
     })
 }
@@ -111,7 +108,26 @@ exports.showDashboard = (req,res)=>{
 
 
 // logout action
-exports.ActionLogout = (req,res)=>{
+exports.ActionLogout = (req, res) => {
     res.clearCookie("token");
     res.redirect('/alogin');
+}
+
+// find all registration
+exports.findAllRegstration = async (req, res) => {
+    try {
+        const data = await RegData.find({});
+        console.log(data);
+        return res.render('admin/showreg',{
+            data: data,
+            user: req.user.userid
+        })
+    }
+    catch (error) {
+        console.log(error);
+        return res.render('admin/login', {
+            status: "Error",
+            message: "Server error!"
+        });
+    }
 }

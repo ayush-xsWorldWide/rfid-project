@@ -1,0 +1,35 @@
+<%- include('../partials/header')%>
+<%- include('navbar')%>
+        <div class="container mt-3">
+            <% if(data.length == 0){ %>
+                        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                        <script>
+                            swal("No registration yet!", "No data to be shown", "warning");
+                        </script>
+            <%}%>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Card Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% var count = 1 %>
+                    <% data.forEach(element=>{ %>
+                        <tr>
+                            <th scope="row"><%=count %></th>
+                            <td><%=element.name%></td>
+                            <td><%=element.email%></td>
+                            <td><%=element.phone%></td>
+                            <td><%=element.cardno%></td>
+                        </tr>
+                        <% count+=1 %>
+                        <% }) %>
+                </tbody>
+            </table>
+        </div>
+        <%- include('../partials/footer')%>
