@@ -48,10 +48,10 @@ exports.ActionRegisterPage = async (req, res) => {
     try {
         await Vistiter.create(req.body);
         
-        // mailer({
-        //     email: req.body.email,
-        //     message: "Please activate your card!"
-        // });
+        mailer({
+            email: req.body.email,
+            message: "Please activate your card!"
+        });
         return res.render('register', {
             status: 'Success',
         });
