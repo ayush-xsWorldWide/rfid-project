@@ -57,10 +57,11 @@ exports.ActionRegisterPage = async (req, res) => {
         });
     }
     catch (error) {
+    // console.log(error);
         if(error.code == 11000)
         return res.render('register', {
             status: 'Error',
-            message: "Phone Number already Exist!"
+            message: `${Object.keys(error.keyPattern)} already Exist!`
         });
     }
 }
