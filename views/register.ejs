@@ -34,7 +34,7 @@
     <%if(status=="Error"){%>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script>
-            swal("Error", "Some error occured!", "error");
+            swal("Error", "<%=message %>", "error");
         </script>
     <% } %>
     <%if(status=="Warning"){%>

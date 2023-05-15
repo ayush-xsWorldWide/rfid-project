@@ -1,16 +1,17 @@
 const mongoose = require('mongoose');
 
 const visiter = mongoose.Schema({
-    name: {
+    email: {
         type: String,
         required: true
     },
-    email: {
+    name: {
         type: String,
         required: true
     },
     phone: {
         type: String,
+        unique: true,
         required: true
     },
     cardno: {

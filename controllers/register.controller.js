@@ -57,10 +57,10 @@ exports.ActionRegisterPage = async (req, res) => {
         });
     }
     catch (error) {
-        console.log(error);
+        if(error.code == 11000)
         return res.render('register', {
             status: 'Error',
-            message: "Email already Exist!"
+            message: "Phone Number already Exist!"
         });
     }
 }
