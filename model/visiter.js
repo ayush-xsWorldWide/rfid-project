@@ -10,6 +10,9 @@ const visiter = mongoose.Schema({
         type: String,
         required: true
     },
+    eventname:{
+        type: String
+    },
     phone: {
         type: String,
         unique: true,

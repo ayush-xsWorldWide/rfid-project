@@ -1,5 +1,6 @@
 const AdminCred = require('../model/adminCred');
 const RegData = require('../model/visiter');
+const Events = require('../model/event');
 
 // utils
 const { decrypt } = require("../utils/crypt");
@@ -116,7 +117,7 @@ exports.ActionLogout = (req, res) => {
 // find all registration
 exports.findAllRegstration = async (req, res) => {
     try {
-        const data = await RegData.find({});
+        const data = await RegData.find({eventname: req.params.eventname});
         // console.log(data);
         return res.render('admin/showreg',{
             data: data,
@@ -129,5 +130,51 @@ exports.findAllRegstration = async (req, res) => {
             status: "Error",
             message: "Server error!"
         });
+    }
+}
+
+
+exports.createEvent = (req,res)=>{
+    return res.render('admin/createEvent',{
+        user: req.user.userid,
+        status:''
+    });
+}
+exports.createEventHandler = async(req,res)=>{
+    try{
+        const { name, place, time, date } = req.body;
+        console.log(name, place, time, date);
+        // if()
+        await Events.create(req.body);
+        return res.render('admin/createEvent',{
+            user: req.user.userid,
+            status:'Success'
+        });
+    }
+    catch(error)
+    {
+        return res.render('admin/createEvent', {
+            status: "Error",
+            user: req.user.userid,
+            message: "Server error!"
+        });
+    }
+}
+exports.fetchEvents = async(req,res)=>{
+    try{
+        const data = await Events.find({});
+        return res.render('admin/showEvents', {
+            status: "",
+            data: data,
+            user: req.user.userid,
+        });
+    }
+    catch(error)
+    {
+        console.log("Some error occured!");
+        // return res.render('admin/showEvent', {
+        //     status: "Error",
+        //     message: "Server error!"
+        // });
     }
 }

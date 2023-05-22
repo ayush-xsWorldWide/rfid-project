@@ -29,9 +29,16 @@ app.post('/alogin', adminController.ActionLogin);
 app.get('/logout', adminController.ActionLogout);
 
 app.get('/dashboard', auth.isAuthenticated,adminController.showDashboard);
-app.get('/showreg', auth.isAuthenticated, adminController.findAllRegstration);
+app.get('/showreg/:eventname', auth.isAuthenticated, adminController.findAllRegstration);
 
 app.get('/cardstatus/:cardno', cardController.UpdateStatus);
+
+
+// create event
+app.get('/create', auth.isAuthenticated, adminController.createEvent);
+app.post('/create', auth.isAuthenticated, adminController.createEventHandler);
+
+app.get('/showevent', auth.isAuthenticated, adminController.fetchEvents);
 // add card
 // app.get('/addcard', auth.isAuthenticated, adminController.showAddCard);
 // app.post('/addcard', auth.isAuthenticated, adminController.addCardInfo);

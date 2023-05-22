@@ -1,0 +1,40 @@
+<%- include('../partials/header')%>
+    <%- include('navbar')%>
+
+        <div class="container mt-3">
+            <div class="card-group">
+                <% data.forEach(element=>{ %>
+
+                    <div class="card" style="width: 18rem;">
+                        <!-- <img src="..." class="card-img-top" alt="..."> -->
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%=element.name%>
+                            </h5>
+                            <p class="card-text">
+                                Place:- <%=element.place%>
+                                    <br>
+                                    Date:- <%=element.date%>
+                                        <br>
+                                        Time:- <%=element.time%>
+                            </p>
+                            <a href="/showreg/<%=element.name%>" class="btn btn-primary">See registration</a>
+                        </div>
+                    </div>
+                    <!-- <div class="card">
+            <div class="card-body">
+              <h4 class="card-title"><%=element.name%></h4>
+              <p class="card-text">
+                Place:- <%=element.place%>
+                <br>
+                Date:- <%=element.date%>
+                <br>
+                Time:- <%=element.time%>
+              </p>
+            </div>
+          </div> -->
+                    <% }) %>
+            </div>
+        </div>
+
+        <%- include('../partials/footer')%>
