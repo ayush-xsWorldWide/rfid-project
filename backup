@@ -1,0 +1,57 @@
+<%- include('partials/header')%>
+    <div class="container shadow-lg p-3 mt-5">
+        <h1>Register Yourself!</h1>
+        <form class="mt-3 p-2" method="post" action="/cregister">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Event Name</label>
+                <select class="form-select" name="eventname">
+                    <option selected>Select a Event</option>
+                    <% data.forEach(element => {%>
+                        <option value="<%=element.name%>"><%=element.name%></option>
+                    <% }) %>
+                </select>
+                <!-- <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Name</label>
+                <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Phone</label>
+                <input name="phone" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Card Number</label>
+                <input name="cardno" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <%if(status=="Success"){%>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            swal("Good job!", "Your Registration was Successfull", "success");
+        </script>
+    <% } %>
+    <%if(status=="Error"){%>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            swal("Error", "<%=message %>", "error");
+        </script>
+    <% } %>
+    <%if(status=="Warning"){%>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            swal("Warning", "<%=message %>", "warning");
+        </script>
+    <% } %>
+<%- include('partials/footer')%>

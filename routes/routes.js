@@ -17,8 +17,8 @@ app.get('/health',(req,res)=>{
 })
 
 // client reg end-point
-app.get('/cregister', registerController.showRegisterPage);
-app.post('/cregister', registerController.ActionRegisterPage);
+app.get('/cregister/:eventname', registerController.showRegisterPage);
+app.post('/cregister/:eventname', registerController.ActionRegisterPage);
 
 
 
@@ -42,5 +42,11 @@ app.get('/showevent', auth.isAuthenticated, adminController.fetchEvents);
 // add card
 // app.get('/addcard', auth.isAuthenticated, adminController.showAddCard);
 // app.post('/addcard', auth.isAuthenticated, adminController.addCardInfo);
+
+
+// 404
+app.get('/404', (req,res)=>{
+    return res.render('404');
+})
 
 module.exports = app;
