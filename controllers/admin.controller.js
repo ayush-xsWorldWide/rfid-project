@@ -2,6 +2,8 @@ const AdminCred = require('../model/adminCred');
 const RegData = require('../model/visiter');
 const Events = require('../model/event');
 
+const { mailerConfiramtion } = require('../utils/EventConfiramtion');
+
 // utils
 const { decrypt } = require("../utils/crypt");
 const { generateToken } = require("../utils/token");
@@ -141,11 +143,19 @@ exports.createEvent = (req,res)=>{
     });
 }
 exports.createEventHandler = async(req,res)=>{
+    console.log(req.headers.host);
     try{
-        const { name, place, time, date } = req.body;
+        const { name, place, time, date, email } = req.body;
         console.log(name, place, time, date);
         // if()
         await Events.create(req.body);
+
+        mailerConfiramtion({
+            email: req.body.email,
+            message: `You have Successfully created a event called ${name}`,
+            link: req.headers.host+`/cregister/${name}`
+        });
+
         return res.render('admin/createEvent',{
             user: req.user.userid,
             status:'Success'

@@ -4,6 +4,9 @@ const events = mongoose.Schema({
     name: {
         type: String
     },
+    email:{
+        type: String
+    },
     place: {
         type: String
     },
