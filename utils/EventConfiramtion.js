@@ -86,6 +86,7 @@ exports.mailerConfiramtion = async (data) => {
                                                 <td>
                                                     <br>
                                                     <center><a href=${"http//" + data.link} style="background-color: #7b38d8;padding: 10px;color: #ffffff;text-align: center;">Click me!</a></center>
+                                                    
                                                   <br>
                                                   <br>
                                                   <span style="color: black;font-size:30px;">${data.link}<span>
