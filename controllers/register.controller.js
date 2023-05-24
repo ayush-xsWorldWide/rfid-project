@@ -89,7 +89,13 @@ exports.ActionRegisterPage = async (req, res) => {
         });
     }
     try {
-        await Vistiter.create(req.body);
+        await Vistiter.create({
+            name, 
+            email, 
+            phone, 
+            cardno, 
+            eventname
+        });
 
         mailer({
             email: req.body.email,
