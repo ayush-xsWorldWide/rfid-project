@@ -143,17 +143,68 @@ exports.createEvent = (req,res)=>{
     });
 }
 exports.createEventHandler = async(req,res)=>{
-    console.log(req.headers.host);
+    // console.log(req.headers.host);
     try{
         const { name, place, time, date, email } = req.body;
         console.log(name, place, time, date);
+
+        if(!name || !place || !time || !date || !email)
+        {
+            if(!name)
+            {
+                return res.render('admin/createEvent', {
+                    status: "Warning",
+                    user: req.user.userid,
+                    message: "Please enter the event name"
+                });
+            }
+            if(!place)
+            {
+                return res.render('admin/createEvent', {
+                    status: "Warning",
+                    user: req.user.userid,
+                    message: "Please enter the event place"
+                });
+            }
+            if(!time)
+            {
+                return res.render('admin/createEvent', {
+                    status: "Warning",
+                    user: req.user.userid,
+                    message: "Please enter the event time"
+                });
+            }
+            if(!date)
+            {
+                return res.render('admin/createEvent', {
+                    status: "Warning",
+                    user: req.user.userid,
+                    message: "Please enter the event date"
+                });
+            }
+            if(!email)
+            {
+                return res.render('admin/createEvent', {
+                    status: "Warning",
+                    user: req.user.userid,
+                    message: "Please enter the email"
+                });
+            }
+        }
+
         // if()
-        await Events.create(req.body);
+        await Events.create({
+            name: name.replaceAll(" ", "-"),
+            place,
+            date,
+            time,
+            email
+        });
 
         mailerConfiramtion({
             email: req.body.email,
             message: `You have Successfully created a event called ${name}`,
-            link: req.headers.host+`/cregister/${name}`
+            link: req.headers.host+`/cregister/${name.replaceAll(" ", "-")}`
         });
 
         return res.render('admin/createEvent',{
