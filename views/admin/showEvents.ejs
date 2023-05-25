@@ -2,6 +2,12 @@
     <%- include('navbar')%>
 
         <div class="container mt-3">
+            <% if(data.length == 0){ %>
+                <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                <script>
+                    swal("No Events have been created", "No data to be shown", "warning");
+                </script>
+            <%}%>
             <div class="card-group">
                 <% data.forEach(element=>{ %>
 

@@ -14,7 +14,13 @@ exports.showRegisterPage = async (req, res) => {
         if (flag) {
             return res.render('register', {
                 status: '',
-                eventname: req.params.eventname
+                eventname: req.params.eventname,
+                data:{
+                    name: '', 
+                    email: '', 
+                    phone: '', 
+                    cardno: ''
+                }
             });
         }
         return res.redirect('/404');
@@ -46,7 +52,13 @@ exports.ActionRegisterPage = async (req, res) => {
             return res.render('register', {
                 status: 'Warning',
                 message: "Enter the name to proceed",
-                eventname: eventname
+                eventname: eventname,
+                data:{
+                    name: name, 
+                    email: email, 
+                    phone: phone, 
+                    cardno: cardno
+                }
             });
         }
 
@@ -54,7 +66,13 @@ exports.ActionRegisterPage = async (req, res) => {
             return res.render('register', {
                 status: 'Warning',
                 message: "Enter the email to proceed",
-                eventname: eventname
+                eventname: eventname,
+                data:{
+                    name: name, 
+                    email: email, 
+                    phone: phone, 
+                    cardno: cardno
+                }
             });
         }
 
@@ -62,7 +80,13 @@ exports.ActionRegisterPage = async (req, res) => {
             return res.render('register', {
                 status: 'Warning',
                 message: "Enter your phone number to proceed",
-                eventname: eventname
+                eventname: eventname,
+                data:{
+                    name: name, 
+                    email: email, 
+                    phone: phone, 
+                    cardno: cardno
+                }
             });
         }
 
@@ -70,7 +94,14 @@ exports.ActionRegisterPage = async (req, res) => {
             return res.render('register', {
                 status: 'Warning',
                 message: "Enter the card number to proceed",
-                eventname: eventname
+                eventname: eventname,
+                data:{
+                    name: name, 
+                    email: email, 
+                    phone: phone, 
+                    cardno: cardno
+                }
+
             });
         }
     }
@@ -78,14 +109,26 @@ exports.ActionRegisterPage = async (req, res) => {
         return res.render('register', {
             status: 'Warning',
             message: "please select the event before you go!",
-            eventname: eventname
+            eventname: eventname,
+            data:{
+                name: name, 
+                email: email, 
+                phone: phone, 
+                cardno: cardno
+            }
         });
     }
     if (phone.length > 10 || phone.length < 10) {
         return res.render('register', {
             status: 'Warning',
             message: "The phone number should be of 10 Digits",
-            eventname: eventname
+            eventname: eventname,
+            data:{
+                name: name, 
+                email: email, 
+                phone: phone, 
+                cardno: cardno
+            }
         });
     }
     try {
@@ -103,7 +146,13 @@ exports.ActionRegisterPage = async (req, res) => {
         });
         return res.render('register', {
             status: 'Success',
-            eventname: eventname
+            eventname: eventname,
+            data:{
+                name: '', 
+                email: '', 
+                phone: '', 
+                cardno: ''
+            }
         });
     }
     catch (error) {
@@ -112,7 +161,13 @@ exports.ActionRegisterPage = async (req, res) => {
             return res.render('register', {
                 status: 'Error',
                 message: `${Object.keys(error.keyPattern)} already Exist!`,
-                eventname: eventname
+                eventname: eventname,
+                data:{
+                    name: name, 
+                    email: email, 
+                    phone: phone, 
+                    cardno: cardno
+                }
             });
     }
 }
