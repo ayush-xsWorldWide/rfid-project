@@ -139,14 +139,21 @@ exports.findAllRegstration = async (req, res) => {
 exports.createEvent = (req,res)=>{
     return res.render('admin/createEvent',{
         user: req.user.userid,
-        status:''
+        status:'',
+        data:{
+            name: '',
+            place:'',
+            date:'',
+            time:'',
+            email:''
+        }
     });
 }
 exports.createEventHandler = async(req,res)=>{
     // console.log(req.headers.host);
     try{
         const { name, place, time, date, email } = req.body;
-        console.log(name, place, time, date);
+        // console.log(name, place, time, date);
 
         if(!name || !place || !time || !date || !email)
         {
@@ -155,7 +162,14 @@ exports.createEventHandler = async(req,res)=>{
                 return res.render('admin/createEvent', {
                     status: "Warning",
                     user: req.user.userid,
-                    message: "Please enter the event name"
+                    message: "Please enter the event name",
+                    data:{
+                        name: name,
+                        place: place,
+                        date: date,
+                        time: time,
+                        email: email
+                    }
                 });
             }
             if(!place)
@@ -163,7 +177,14 @@ exports.createEventHandler = async(req,res)=>{
                 return res.render('admin/createEvent', {
                     status: "Warning",
                     user: req.user.userid,
-                    message: "Please enter the event place"
+                    message: "Please enter the event place",
+                    data:{
+                        name: name,
+                        place: place,
+                        date: date,
+                        time: time,
+                        email: email
+                    }
                 });
             }
             if(!time)
@@ -171,7 +192,14 @@ exports.createEventHandler = async(req,res)=>{
                 return res.render('admin/createEvent', {
                     status: "Warning",
                     user: req.user.userid,
-                    message: "Please enter the event time"
+                    message: "Please enter the event time",
+                    data:{
+                        name: name,
+                        place: place,
+                        date: date,
+                        time: time,
+                        email: email
+                    }
                 });
             }
             if(!date)
@@ -179,7 +207,14 @@ exports.createEventHandler = async(req,res)=>{
                 return res.render('admin/createEvent', {
                     status: "Warning",
                     user: req.user.userid,
-                    message: "Please enter the event date"
+                    message: "Please enter the event date",
+                    data:{
+                        name: name,
+                        place: place,
+                        date: date,
+                        time: time,
+                        email: email
+                    }
                 });
             }
             if(!email)
@@ -187,11 +222,75 @@ exports.createEventHandler = async(req,res)=>{
                 return res.render('admin/createEvent', {
                     status: "Warning",
                     user: req.user.userid,
-                    message: "Please enter the email"
+                    message: "Please enter the email",
+                    data:{
+                        name: name,
+                        place: place,
+                        date: date,
+                        time: time,
+                        email: email
+                    }
                 });
             }
         }
 
+        // test for date of creation of event
+        const systemDate = new Date();
+        const EnteredDate = date.split('-');
+
+        // testing the year
+        if(systemDate.getUTCFullYear() > parseInt(EnteredDate[0]))
+        {
+            // condition for back Date
+            return res.render('admin/createEvent', {
+                status: "Warning",
+                user: req.user.userid,
+                message: "Sorry we Cannot create event for previous year!",
+                data:{
+                    name: name,
+                    place: place,
+                    date: date,
+                    time: time,
+                    email: email
+                }
+            });
+        }
+        // console.log(systemDate.getUTCMonth() , parseInt(EnteredDate[1]))
+        // testing for month
+        if(systemDate.getUTCMonth() >= parseInt(EnteredDate[1]))
+        {
+            // condition for back Date
+            return res.render('admin/createEvent', {
+                status: "Warning",
+                user: req.user.userid,
+                message: "Sorry we Cannot create event for previous Month!",
+                data:{
+                    name: name,
+                    place: place,
+                    date: date,
+                    time: time,
+                    email: email
+                }
+            });
+        }
+        // testing for day
+        // console.log(parseInt(EnteredDate[2]) , systemDate.getUTCDate(),EnteredDate[2] - systemDate.getUTCDate())
+        if((parseInt(EnteredDate[2]) - systemDate.getUTCDate()) < -1)
+        {
+            // condition for back Date
+            return res.render('admin/createEvent', {
+                status: "Warning",
+                user: req.user.userid,
+                message: "Sorry we Cannot create event for previous Date!",
+                data:{
+                    name: name,
+                    place: place,
+                    date: date,
+                    time: time,
+                    email: email
+                }
+            });
+        }
         // if()
         await Events.create({
             name: name.replaceAll(" ", "-"),
@@ -209,7 +308,14 @@ exports.createEventHandler = async(req,res)=>{
 
         return res.render('admin/createEvent',{
             user: req.user.userid,
-            status:'Success'
+            status:'Success',
+            data:{
+                name: '',
+                place:'',
+                date:'',
+                time:'',
+                email:''
+            }
         });
     }
     catch(error)
@@ -217,7 +323,14 @@ exports.createEventHandler = async(req,res)=>{
         return res.render('admin/createEvent', {
             status: "Error",
             user: req.user.userid,
-            message: "Server error!"
+            message: "Server error!",
+            data:{
+                name: '',
+                place:'',
+                date: '',
+                time:'',
+                email:''
+            }
         });
     }
 }
