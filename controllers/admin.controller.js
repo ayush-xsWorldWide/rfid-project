@@ -275,8 +275,10 @@ exports.createEventHandler = async(req,res)=>{
         }
         // testing for day
         // console.log(parseInt(EnteredDate[2]) , systemDate.getUTCDate(),EnteredDate[2] - systemDate.getUTCDate())
-        if((parseInt(EnteredDate[2]) - systemDate.getUTCDate()) < -1)
+        // console.log(systemDate.getUTCMonth() , parseInt(EnteredDate[1]) );
+        if((systemDate.getUTCMonth()+1) == parseInt(EnteredDate[1]) && (parseInt(EnteredDate[2]) - systemDate.getUTCDate()) < -1)
         {
+            // console.log("enter");
             // condition for back Date
             return res.render('admin/createEvent', {
                 status: "Warning",
