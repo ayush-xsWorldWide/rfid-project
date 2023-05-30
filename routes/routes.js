@@ -12,6 +12,9 @@ const auth = require('../middleware/auth');
 //iot access routes
 const cardController = require('../controllers/card.controller');
 
+// product controller 
+const productController = require('../controllers/product.controller');
+
 app.get('/health',(req,res)=>{
     return res.send("HI from server");
 })
@@ -42,6 +45,9 @@ app.get('/showevent', auth.isAuthenticated, adminController.fetchEvents);
 // add card
 // app.get('/addcard', auth.isAuthenticated, adminController.showAddCard);
 // app.post('/addcard', auth.isAuthenticated, adminController.addCardInfo);
+
+// add product
+app.get('/addproduct/:event', auth.isAuthenticated ,productController.showCreateProductPage);
 
 
 // 404
