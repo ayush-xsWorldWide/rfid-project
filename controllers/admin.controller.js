@@ -136,7 +136,8 @@ exports.findAllRegstration = async (req, res) => {
         // console.log(data);
         return res.render('admin/showreg',{
             data: data,
-            user: req.user.userid
+            user: req.user.userid,
+            eventname: req.params.eventname
         })
     }
     catch (error) {

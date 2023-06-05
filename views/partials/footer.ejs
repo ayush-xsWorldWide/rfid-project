@@ -35,6 +35,27 @@
 <script src="assets/plugins/chart.js/chart.min.js"></script>
 <script src="assets/pages/dashboard.js"></script>
 
+<script>
+    //     download excel
+    function exportTableToExcel(tableId, filename) {
+        // Get the table element
+        var table = document.getElementById(tableId);
+
+        // Create a new Blob object from the table data
+        var blob = new Blob([table.outerHTML], { type: 'application/vnd.ms-excel' });
+
+        // Create a link to the file
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = filename;
+
+        // Append the link to the document
+        document.body.appendChild(link);
+
+        // Click the link to download the file
+        link.click();
+    }
+</script>
 <!-- App js -->
 <script src="assets/js/app.js"></script>
 </body>
