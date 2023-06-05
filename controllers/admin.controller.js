@@ -167,7 +167,7 @@ exports.createEventHandler = async(req,res)=>{
     // console.log(req.headers.host);
     try{
         const { name, place, time, date, email, noexp } = req.body;
-        // console.log(name, place, time, date);
+        console.log(name, place, time, date, noexp);
 
         if(!name || !place || !time || !date || !email || !noexp)
         {
