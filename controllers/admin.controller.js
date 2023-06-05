@@ -60,10 +60,23 @@ exports.ActionLogin = async (req, res) => {
 }
 
 // admin dashboard
-exports.showDashboard = (req, res) => {
-    return res.render('admin/dashboard', {
-        user: req.user.userid
-    })
+exports.showDashboard = async (req, res) => {
+    try{
+        const No_of_events = await Events.countDocuments();
+        const No_of_registartion = await RegData.countDocuments();
+
+        return res.render('admin/dashboard', {
+            user: req.user.userid,
+            No_of_events: No_of_events,
+            No_of_registartion: No_of_registartion
+        })
+    }
+    catch(error)
+    {
+        return res.render('admin/dashboard', {
+            user: req.user.userid
+        })
+    }
 }
 
 
@@ -145,17 +158,18 @@ exports.createEvent = (req,res)=>{
             place:'',
             date:'',
             time:'',
-            email:''
+            email:'',
+            noexp:''
         }
     });
 }
 exports.createEventHandler = async(req,res)=>{
     // console.log(req.headers.host);
     try{
-        const { name, place, time, date, email } = req.body;
+        const { name, place, time, date, email, noexp } = req.body;
         // console.log(name, place, time, date);
 
-        if(!name || !place || !time || !date || !email)
+        if(!name || !place || !time || !date || !email || !noexp)
         {
             if(!name)
             {
@@ -168,7 +182,8 @@ exports.createEventHandler = async(req,res)=>{
                         place: place,
                         date: date,
                         time: time,
-                        email: email
+                        email: email,
+                        noexp: noexp
                     }
                 });
             }
@@ -183,7 +198,8 @@ exports.createEventHandler = async(req,res)=>{
                         place: place,
                         date: date,
                         time: time,
-                        email: email
+                        email: email,
+                        noexp:noexp
                     }
                 });
             }
@@ -198,7 +214,8 @@ exports.createEventHandler = async(req,res)=>{
                         place: place,
                         date: date,
                         time: time,
-                        email: email
+                        email: email,
+                        noexp:noexp
                     }
                 });
             }
@@ -213,7 +230,8 @@ exports.createEventHandler = async(req,res)=>{
                         place: place,
                         date: date,
                         time: time,
-                        email: email
+                        email: email,
+                        noexp:noexp
                     }
                 });
             }
@@ -228,7 +246,25 @@ exports.createEventHandler = async(req,res)=>{
                         place: place,
                         date: date,
                         time: time,
-                        email: email
+                        email: email,
+                        noexp:noexp
+                    }
+                });
+            }
+
+            if(!noexp)
+            {
+                return res.render('admin/createEvent', {
+                    status: "Warning",
+                    user: req.user.userid,
+                    message: "Please enter the Number of Expreiances",
+                    data:{
+                        name: name,
+                        place: place,
+                        date: date,
+                        time: time,
+                        email: email,
+                        noexp:noexp
                     }
                 });
             }
@@ -251,7 +287,8 @@ exports.createEventHandler = async(req,res)=>{
                     place: place,
                     date: date,
                     time: time,
-                    email: email
+                    email: email,
+                    noexp:noexp
                 }
             });
         }
@@ -269,7 +306,8 @@ exports.createEventHandler = async(req,res)=>{
                     place: place,
                     date: date,
                     time: time,
-                    email: email
+                    email: email,
+                    noexp: noexp
                 }
             });
         }
@@ -289,7 +327,8 @@ exports.createEventHandler = async(req,res)=>{
                     place: place,
                     date: date,
                     time: time,
-                    email: email
+                    email: email,
+                    noexp: noexp
                 }
             });
         }
@@ -299,7 +338,8 @@ exports.createEventHandler = async(req,res)=>{
             place,
             date,
             time,
-            email
+            email,
+            noexp
         });
 
         mailerConfiramtion({
@@ -316,7 +356,8 @@ exports.createEventHandler = async(req,res)=>{
                 place:'',
                 date:'',
                 time:'',
-                email:''
+                email:'',
+                noexp:'',
             }
         });
     }
@@ -331,7 +372,8 @@ exports.createEventHandler = async(req,res)=>{
                 place:'',
                 date: '',
                 time:'',
-                email:''
+                email:'',
+                noexp:''
             }
         });
     }

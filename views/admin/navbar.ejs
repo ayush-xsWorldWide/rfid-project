@@ -1,29 +1,34 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
     <div class="container-fluid">
         <!-- <a class="navbar-brand" href="/">Navbar</a> -->
-        <img src="/asserts/logo_black.png" alt="" height="40" width="100">
+        <img src="/assets/logo_white.png" alt="" height="40" width="100">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/dashboard">Home</a>
+                    <a class="nav-link active text-white" aria-current="page" href="/dashboard">Home</a>
                 </li>
                 <li class="nav-item">
                     <!-- <a class="nav-link" href="/addcard">Add Card</a> -->
+                    <a class="nav-link active text-white" aria-current="page" href="/create">Create Event</a>
+                </li>
+                <li class="nav-item">
+                    <!-- <a class="nav-link" href="/addcard">Add Card</a> -->
+                    <a class="nav-link active text-white" aria-current="page" href="/showevent">Events</a>
                 </li>
             </ul>
             <div class="d-flex">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Hi, <%=user%>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                            <li><a class="dropdown-item " href="/logout">Logout</a></li>
                         </ul>
                     </li>
                 </ul>

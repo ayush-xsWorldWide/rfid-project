@@ -4,33 +4,39 @@
         <form class="mt-3 p-2" method="post" action="/cregister">
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input name="email" type="email" class="form-control" id="exampleInputEmail1"
+                    aria-describedby="emailHelp">
             </div>
 
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Event Name</label>
                 <select class="form-select" name="eventname">
                     <option selected>Select a Event</option>
-                    <% data.forEach(element => {%>
-                        <option value="<%=element.name%>"><%=element.name%></option>
-                    <% }) %>
+                    <% data.forEach(element=> {%>
+                        <option value="<%=element.name%>">
+                            <%=element.name%>
+                        </option>
+                        <% }) %>
                 </select>
                 <!-- <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
             </div>
 
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Name</label>
-                <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input name="name" type="text" class="form-control" id="exampleInputEmail1"
+                    aria-describedby="emailHelp">
             </div>
 
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Phone</label>
-                <input name="phone" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input name="phone" type="text" class="form-control" id="exampleInputEmail1"
+                    aria-describedby="emailHelp">
             </div>
 
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Card Number</label>
-                <input name="cardno" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input name="cardno" type="text" class="form-control" id="exampleInputEmail1"
+                    aria-describedby="emailHelp">
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -41,45 +47,109 @@
         <script>
             swal("Good job!", "Your Registration was Successfull", "success");
         </script>
-    <% } %>
-    <%if(status=="Error"){%>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script>
-            swal("Error", "<%=message %>", "error");
-        </script>
-    <% } %>
-    <%if(status=="Warning"){%>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script>
-            swal("Warning", "<%=message %>", "warning");
-        </script>
-    <% } %>
-<%- include('partials/footer')%>
+        <% } %>
+            <%if(status=="Error"){%>
+                <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                <script>
+                    swal("Error", "<%=message %>", "error");
+                </script>
+                <% } %>
+                    <%if(status=="Warning"){%>
+                        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                        <script>
+                            swal("Warning", "<%=message %>", "warning");
+                        </script>
+                        <% } %>
+                            <%- include('partials/footer')%>
 
 
 
 
-<div class="card-group">
-    <% data.forEach(element=>{ %>
+                                <div class="card-group">
+                                    <% data.forEach(element=>{ %>
 
-        <div class="card" style="width: 18rem;">
-            <!-- <img src="..." class="card-img-top" alt="..."> -->
-            <div class="card-body">
-                <h5 class="card-title">
-                    <%=element.name.replaceAll("-", " " );%>
-                </h5>
-                <p class="card-text">
-                    Place:- <%=element.place%>
-                        <br>
-                        Date:- <%=element.date%>
-                            <br>
-                            Time:- <%=element.time%>
-                </p>
-                <div class="d-flex justify-content-between">
-                    <a href="/showreg/<%=element.name%>" class="btn btn-primary">See
-                        registration</a>
-                    <a href="/addproduct/<%=element.name%>" class="btn btn-danger">Add Product</a>
-                </div>
-            </div>
-        </div>
-        
+                                        <div class="card" style="width: 18rem;">
+                                            <!-- <img src="..." class="card-img-top" alt="..."> -->
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <%=element.name.replaceAll("-", " " );%>
+                                                </h5>
+                                                <p class="card-text">
+                                                    Place:- <%=element.place%>
+                                                        <br>
+                                                        Date:- <%=element.date%>
+                                                            <br>
+                                                            Time:- <%=element.time%>
+                                                </p>
+                                                <div class="d-flex justify-content-between">
+                                                    <a href="/showreg/<%=element.name%>" class="btn btn-primary">See
+                                                        registration</a>
+                                                    <a href="/addproduct/<%=element.name%>" class="btn btn-danger">Add
+                                                        Product</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+                                        <div class="container">
+
+                                            <div class="container mx-auto mt-4">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="card" style="width: 18rem;">
+                                                            <!-- <img src="https://i.imgur.com/ZTkt4I5.jpg" class="card-img-top" alt="..."> -->
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Card title</h5>
+                                                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle
+                                                                </h6>
+                                                                <p class="card-text">Some quick example text to build on
+                                                                    the card title and make up the
+                                                                    bulk of the card's content.</p>
+                                                                <a href="#" class="btn mr-2"><i class="fas fa-link"></i>
+                                                                    Visit Site</a>
+                                                                <a href="#" class="btn "><i class="fab fa-github"></i>
+                                                                    Github</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="card" style="width: 18rem;">
+                                                            <!-- <img src="https://i.imgur.com/ZTkt4I5.jpg" class="card-img-top" alt="..."> -->
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Card title</h5>
+                                                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle
+                                                                </h6>
+                                                                <p class="card-text">Some quick example text to build on
+                                                                    the card title and make up the
+                                                                    bulk of the card's content.</p>
+                                                                <a href="#" class="btn  mr-2"><i
+                                                                        class="fas fa-link"></i> Visit Site</a>
+                                                                <a href="#" class="btn"><i class="fab fa-github"></i>
+                                                                    Github</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="card" style="width: 18rem;">
+                                                            <!-- <img src="https://i.imgur.com/ZTkt4I5.jpg" class="card-img-top" alt="..."> -->
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Card title</h5>
+                                                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle
+                                                                </h6>
+                                                                <p class="card-text">Some quick example text to build on
+                                                                    the card title and make up the
+                                                                    bulk of the card's content.</p>
+                                                                <a href="#" class="btn mr-2"><i class="fas fa-link"></i>
+                                                                    Visit Site</a>
+                                                                <a href="#" class="btn "><i class="fab fa-github"></i>
+                                                                    Github</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>

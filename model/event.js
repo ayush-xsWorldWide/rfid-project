@@ -10,6 +10,9 @@ const events = mongoose.Schema({
     place: {
         type: String
     },
+    noexp:{
+        type: String
+    },
     time: {
         type: String
     },
