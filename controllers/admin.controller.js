@@ -61,7 +61,7 @@ exports.ActionLogin = async (req, res) => {
 
 // admin dashboard
 exports.showDashboard = async (req, res) => {
-    try{
+    try {
         const No_of_events = await Events.countDocuments();
         const No_of_registartion = await RegData.countDocuments();
 
@@ -71,8 +71,7 @@ exports.showDashboard = async (req, res) => {
             No_of_registartion: No_of_registartion
         })
     }
-    catch(error)
-    {
+    catch (error) {
         return res.render('admin/dashboard', {
             user: req.user.userid
         })
@@ -132,9 +131,9 @@ exports.ActionLogout = (req, res) => {
 // find all registration
 exports.findAllRegstration = async (req, res) => {
     try {
-        const data = await RegData.find({eventname: req.params.eventname});
+        const data = await RegData.find({ eventname: req.params.eventname });
         // console.log(data);
-        return res.render('admin/showreg',{
+        return res.render('admin/showreg', {
             data: data,
             user: req.user.userid,
             eventname: req.params.eventname
@@ -150,35 +149,33 @@ exports.findAllRegstration = async (req, res) => {
 }
 
 
-exports.createEvent = (req,res)=>{
-    return res.render('admin/createEvent',{
+exports.createEvent = (req, res) => {
+    return res.render('admin/createEvent', {
         user: req.user.userid,
-        status:'',
-        data:{
+        status: '',
+        data: {
             name: '',
-            place:'',
-            date:'',
-            time:'',
-            email:'',
-            noexp:''
+            place: '',
+            date: '',
+            time: '',
+            email: '',
+            noexp: ''
         }
     });
 }
-exports.createEventHandler = async(req,res)=>{
+exports.createEventHandler = async (req, res) => {
     // console.log(req.headers.host);
-    try{
+    try {
         const { name, place, time, date, email, noexp } = req.body;
         console.log(name, place, time, date, noexp);
 
-        if(!name || !place || !time || !date || !email || !noexp)
-        {
-            if(!name)
-            {
+        if (!name || !place || !time || !date || !email || !noexp) {
+            if (!name) {
                 return res.render('admin/createEvent', {
                     status: "Warning",
                     user: req.user.userid,
                     message: "Please enter the event name",
-                    data:{
+                    data: {
                         name: name,
                         place: place,
                         date: date,
@@ -188,84 +185,79 @@ exports.createEventHandler = async(req,res)=>{
                     }
                 });
             }
-            if(!place)
-            {
+            if (!place) {
                 return res.render('admin/createEvent', {
                     status: "Warning",
                     user: req.user.userid,
                     message: "Please enter the event place",
-                    data:{
+                    data: {
                         name: name,
                         place: place,
                         date: date,
                         time: time,
                         email: email,
-                        noexp:noexp
+                        noexp: noexp
                     }
                 });
             }
-            if(!time)
-            {
+            if (!time) {
                 return res.render('admin/createEvent', {
                     status: "Warning",
                     user: req.user.userid,
                     message: "Please enter the event time",
-                    data:{
+                    data: {
                         name: name,
                         place: place,
                         date: date,
                         time: time,
                         email: email,
-                        noexp:noexp
+                        noexp: noexp
                     }
                 });
             }
-            if(!date)
-            {
+            if (!date) {
                 return res.render('admin/createEvent', {
                     status: "Warning",
                     user: req.user.userid,
                     message: "Please enter the event date",
-                    data:{
+                    data: {
                         name: name,
                         place: place,
                         date: date,
                         time: time,
                         email: email,
-                        noexp:noexp
+                        noexp: noexp
                     }
                 });
             }
-            if(!email)
-            {
+            if (!email) {
                 return res.render('admin/createEvent', {
                     status: "Warning",
                     user: req.user.userid,
                     message: "Please enter the email",
-                    data:{
+                    data: {
                         name: name,
                         place: place,
                         date: date,
                         time: time,
                         email: email,
-                        noexp:noexp
+                        noexp: noexp
                     }
                 });
             }
 
-            if(!noexp)
-            {
+            if (!noexp) {
                 return res.render('admin/createEvent', {
                     status: "Warning",
                     user: req.user.userid,
                     message: "Please enter the Number of Expreiances",
-                    data:{
+                    data: {
                         name: name,
                         place: place,
                         date: date,
                         time: time,
                         email: email,
-                        noexp:noexp
+                        noexp: noexp
                     }
                 });
             }
@@ -276,33 +268,31 @@ exports.createEventHandler = async(req,res)=>{
         const EnteredDate = date.split('-');
 
         // testing the year
-        if(systemDate.getUTCFullYear() > parseInt(EnteredDate[0]))
-        {
+        if (systemDate.getUTCFullYear() > parseInt(EnteredDate[0])) {
             // condition for back Date
             return res.render('admin/createEvent', {
                 status: "Warning",
                 user: req.user.userid,
                 message: "Sorry we Cannot create event for previous year!",
-                data:{
+                data: {
                     name: name,
                     place: place,
                     date: date,
                     time: time,
                     email: email,
-                    noexp:noexp
+                    noexp: noexp
                 }
             });
         }
         // console.log(systemDate.getUTCMonth() , parseInt(EnteredDate[1]))
         // testing for month
-        if(systemDate.getUTCMonth() >= parseInt(EnteredDate[1]))
-        {
+        if (systemDate.getUTCMonth() >= parseInt(EnteredDate[1])) {
             // condition for back Date
             return res.render('admin/createEvent', {
                 status: "Warning",
                 user: req.user.userid,
                 message: "Sorry we Cannot create event for previous Month!",
-                data:{
+                data: {
                     name: name,
                     place: place,
                     date: date,
@@ -315,15 +305,14 @@ exports.createEventHandler = async(req,res)=>{
         // testing for day
         // console.log(parseInt(EnteredDate[2]) , systemDate.getUTCDate(),EnteredDate[2] - systemDate.getUTCDate())
         // console.log(systemDate.getUTCMonth() , parseInt(EnteredDate[1]) );
-        if((systemDate.getUTCMonth()+1) == parseInt(EnteredDate[1]) && (parseInt(EnteredDate[2]) - systemDate.getUTCDate()) < -1)
-        {
+        if ((systemDate.getUTCMonth() + 1) == parseInt(EnteredDate[1]) && (parseInt(EnteredDate[2]) - systemDate.getUTCDate()) < -1) {
             // console.log("enter");
             // condition for back Date
             return res.render('admin/createEvent', {
                 status: "Warning",
                 user: req.user.userid,
                 message: "Sorry we Cannot create event for previous Date!",
-                data:{
+                data: {
                     name: name,
                     place: place,
                     date: date,
@@ -346,41 +335,40 @@ exports.createEventHandler = async(req,res)=>{
         mailerConfiramtion({
             email: req.body.email,
             message: `You have Successfully created a event called ${name}`,
-            link: req.headers.host+`/cregister/${name.replaceAll(" ", "-")}`
+            link: req.headers.host + `/cregister/${name.replaceAll(" ", "-")}`
         });
 
-        return res.render('admin/createEvent',{
+        return res.render('admin/createEvent', {
             user: req.user.userid,
-            status:'Success',
-            data:{
+            status: 'Success',
+            data: {
                 name: '',
-                place:'',
-                date:'',
-                time:'',
-                email:'',
-                noexp:'',
+                place: '',
+                date: '',
+                time: '',
+                email: '',
+                noexp: '',
             }
         });
     }
-    catch(error)
-    {
+    catch (error) {
         return res.render('admin/createEvent', {
             status: "Error",
             user: req.user.userid,
             message: "Server error!",
-            data:{
+            data: {
                 name: '',
-                place:'',
+                place: '',
                 date: '',
-                time:'',
-                email:'',
-                noexp:''
+                time: '',
+                email: '',
+                noexp: ''
             }
         });
     }
 }
-exports.fetchEvents = async(req,res)=>{
-    try{
+exports.fetchEvents = async (req, res) => {
+    try {
         const data = await Events.find({});
         return res.render('admin/showEvents', {
             status: "",
@@ -388,12 +376,34 @@ exports.fetchEvents = async(req,res)=>{
             user: req.user.userid,
         });
     }
-    catch(error)
-    {
+    catch (error) {
         console.log("Some error occured!");
         // return res.render('admin/showEvent', {
         //     status: "Error",
         //     message: "Server error!"
         // });
+    }
+}
+
+
+exports.search = async (req, res) => {
+    var searchedItems = []
+    const { find } = req.body;
+    try {
+        const data = await Events.find({});
+        data.forEach(element => {
+            if (element.name == find || element.place == find || element.date == find || element.time == find) {
+                searchedItems.push(element);
+            }
+        })
+        return res.render('admin/showEvents', {
+            status: "",
+            data: searchedItems,
+            user: req.user.userid,
+        });
+    }
+    catch (error) {
+        console.log("some error");
+        res.redirect('/showevent')
     }
 }

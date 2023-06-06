@@ -49,6 +49,8 @@ app.get('/showevent', auth.isAuthenticated, adminController.fetchEvents);
 // add product
 app.get('/addproduct/:event', auth.isAuthenticated ,productController.showCreateProductPage);
 
+// search feature
+app.post('/search', auth.isAuthenticated, adminController.search)
 
 // 404
 app.get('/404', (req,res)=>{
