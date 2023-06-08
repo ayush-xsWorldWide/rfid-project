@@ -1,67 +1,33 @@
 <%- include('../partials/header')%>
     <%- include('navbar')%>
-    <style>
-
-    body,html{
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    /* background: #e74c3c !important; */
-    }
-
-    .searchbar{
-    margin-bottom: auto;
-    margin-top: auto;
-    height: 60px;
-    background-color: #353b48;
-    border-radius: 30px;
-    padding: 10px;
-    }
-
-    .search_input{
-    color: white;
-    border: 0;
-    outline: 0;
-    background: none;
-    width: 0;
-    caret-color:transparent;
-    line-height: 40px;
-    transition: width 0.4s linear;
-    }
-
-    .searchbar:hover > .search_input{
-    padding: 0 10px;
-    width: 450px;
-    caret-color: white;
-    transition: width 0.4s linear;
-    }
-
-    .searchbar:hover > .search_icon{
-    background: white;
-    color: black;
-    }
-
-    .search_icon{
-    height: 40px;
-    width: 40px;
-    float: right;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    /* color:white; */
-    text-decoration:none;
-    }
-    </style>
     <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
-        <div class="container w-100 mt-3">
-            <div class="d-flex justify-content-end h-100">
-                <form action="/search" method="post" class="searchbar">
-                  <input name="find" class="search_input" type="text" name="" placeholder="Search...">
-                  <button class="search_icon"><i class="fas fa-search"></i></button>
-                </form>
-              </div>
+        <div class="container w-100 mt-3 shadow-lg p-1">
+            <!-- form -->
+            <form action="/search" method="post" class="w-100 d-flex justify-content-between align-items-center flex-wrap">
+                <div class="m-2">
+                    <span>From Date</span>
+                    <input type="date" class="form-control"/>
+                </div>
+
+                <div class="m-2">
+                    <span>To Date</span>
+                    <input type="date" class="form-control"/>
+                </div>
+
+                <div class="m-2">
+                    <span>Name of Event</span>
+                    <input type="text" class="form-control" placeholder="name"/>
+                </div>
+
+                <div class="m-2">
+                    <span>Place</span>
+                    <input type="text" class="form-control" placeholder="place"/>
+                </div>
+
+                <div class="m-2"> 
+                    <button type="submit" class="btn btn-danger">Search</button>
+                </div>
+            </form>
         </div>
         <div class="container">
             <% if(data.length==0){ %>
@@ -76,18 +42,21 @@
 
                                 <div class="card mt-3">
                                     <div class="card-body">
-                                        <h5 class="card-title"><%=element.name.replaceAll("-", " " );%></h5>
+                                        <center><h1 class="card-title"><%=element.name.replaceAll("-", " " );%></h1></center>
+                                        <hr>
                                         <p class="card-text">
                                             Place:- <%=element.place%>
                                                 <br>
                                                 Date:- <%=element.date%>
                                                     <br>
                                                     Time:- <%=element.time%>
+                                                    <br>
+                                                    No of Experience:- <%=element.noexp%>
                                         </p>
-                                        <div class="d-flex justify-content-between">
-                                            <a href="/showreg/<%=element.name%>" class="btn btn-primary">See
+                                        <div class="d-flex justify-content-between flex-wrap">
+                                            <a href="/showreg/<%=element.name%>" class="btn btn-primary m-1">See
                                                 registration</a>
-                                            <a href="/addproduct/<%=element.name%>" class="btn btn-danger">Add
+                                            <a href="/addproduct/<%=element.name%>" class="btn btn-danger m-1">Add
                                                 Product</a>
                                         </div>
                                     </div>

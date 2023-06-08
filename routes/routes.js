@@ -15,7 +15,7 @@ const cardController = require('../controllers/card.controller');
 // product controller 
 const productController = require('../controllers/product.controller');
 
-app.get('/health',(req,res)=>{
+app.get('/health', (req, res) => {
     return res.send("HI from server");
 })
 
@@ -31,7 +31,7 @@ app.post('/alogin', adminController.ActionLogin);
 
 app.get('/logout', adminController.ActionLogout);
 
-app.get('/dashboard', auth.isAuthenticated,adminController.showDashboard);
+app.get('/dashboard', auth.isAuthenticated, adminController.showDashboard);
 app.get('/showreg/:eventname', auth.isAuthenticated, adminController.findAllRegstration);
 
 app.get('/cardstatus/:cardno', cardController.UpdateStatus);
@@ -47,14 +47,18 @@ app.get('/showevent', auth.isAuthenticated, adminController.fetchEvents);
 // app.post('/addcard', auth.isAuthenticated, adminController.addCardInfo);
 
 // add product
-app.get('/addproduct/:event', auth.isAuthenticated ,productController.showCreateProductPage);
+app.get('/addproduct/:event', auth.isAuthenticated, productController.showCreateProductPage);
 
 // search feature
 app.post('/search', auth.isAuthenticated, adminController.search)
 
 // 404
-app.get('/404', (req,res)=>{
+app.get('/404', (req, res) => {
     return res.render('404');
 })
+//The 404 Route (ALWAYS Keep this as the last route)
+app.get('*', function (req, res) {
+    return res.render('404');
+});
 
 module.exports = app;

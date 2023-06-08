@@ -404,6 +404,6 @@ exports.search = async (req, res) => {
     }
     catch (error) {
         console.log("some error");
-        res.redirect('/showevent')
+        res.redirect('/showevent');
     }
 }
