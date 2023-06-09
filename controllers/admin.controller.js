@@ -7,6 +7,7 @@ const { mailerConfiramtion } = require('../utils/EventConfiramtion');
 // utils
 const { decrypt } = require("../utils/crypt");
 const { generateToken } = require("../utils/token");
+const { set } = require('mongoose');
 
 exports.LoginPage = (req, res) => {
     return res.render('admin/login', {
@@ -324,8 +325,8 @@ exports.createEventHandler = async (req, res) => {
         }
         // if()
         await Events.create({
-            name: name.replaceAll(" ", "-"),
-            place,
+            name: (name.replaceAll(" ", "-")).toUpperCase(),
+            place: place.toUpperCase(),
             date,
             time,
             email,
@@ -370,36 +371,64 @@ exports.createEventHandler = async (req, res) => {
 exports.fetchEvents = async (req, res) => {
     try {
         const data = await Events.find({});
+        var places = [];
+        data.filter(element => places.push(element.place));
+        places = [...new Set(places)];
+
         return res.render('admin/showEvents', {
             status: "",
             data: data,
             user: req.user.userid,
+            places: places
         });
     }
     catch (error) {
         console.log("Some error occured!");
+        console.log(error);
         // return res.render('admin/showEvent', {
         //     status: "Error",
         //     message: "Server error!"
         // });
+        return res.redirect('/dashboard');
     }
 }
 
 
 exports.search = async (req, res) => {
-    var searchedItems = []
-    const { find } = req.body;
+    // var searchedItems = []
+    const { fromDate, toDate, eventNm, place } = req.body;
+    // console.log(fromDate, toDate, eventNm, place);
     try {
-        const data = await Events.find({});
-        data.forEach(element => {
-            if (element.name == find || element.place == find || element.date == find || element.time == find) {
-                searchedItems.push(element);
-            }
-        })
+        var data = await Events.find({});
+        var places = [];
+        data.filter(element => places.push(element.place));
+        places = [...new Set(places)];
+
+        // filtration logic
+        
+
+        // if from date is present and to date is absent
+        if(fromDate && toDate)
+            data = data.filter(element => (new Date(fromDate) <= new Date(element.date)) && (new Date(toDate) >= new Date(element.date)));
+        else if(fromDate)
+            data = data.filter(element => new Date(fromDate) <= new Date(element.date));
+        else if(toDate)
+            data = data.filter(element => new Date(toDate) >= new Date(element.date));
+
+        
+        //name filter
+        if(eventNm)
+            data = data.filter(element => eventNm == element.name);
+        // filter with place
+        if(place)
+            data = data.filter(element => place == element.place);
+
+
         return res.render('admin/showEvents', {
             status: "",
-            data: searchedItems,
+            data: data,
             user: req.user.userid,
+            places: places
         });
     }
     catch (error) {

@@ -5,23 +5,29 @@
             <!-- form -->
             <form action="/search" method="post" class="w-100 d-flex justify-content-between align-items-center flex-wrap">
                 <div class="m-2">
-                    <span>From Date</span>
-                    <input type="date" class="form-control"/>
+                    <span class="mb-2">From Date</span>
+                    <input name="fromDate" type="date" class="form-control"/>
                 </div>
 
                 <div class="m-2">
-                    <span>To Date</span>
-                    <input type="date" class="form-control"/>
+                    <span class="mb-2">To Date</span>
+                    <input name="toDate" type="date" class="form-control"/>
                 </div>
 
                 <div class="m-2">
-                    <span>Name of Event</span>
-                    <input type="text" class="form-control" placeholder="name"/>
+                    <span class="mb-2">Name of Event</span>
+                    <input name="eventNm" type="text" class="form-control" placeholder="name"/>
                 </div>
 
                 <div class="m-2">
-                    <span>Place</span>
-                    <input type="text" class="form-control" placeholder="place"/>
+                    <span class="mb-2">Place</span>
+                    <!-- <input name="place" type="text" class="form-control" placeholder="place"/> -->
+                    <select class="form-select" name="place" id="">
+                        <option value="" hidden selected>Places</option>
+                        <% places.forEach(element => { %>
+                            <option value="<%=element %>"><%=element %></option>
+                        <% }) %>
+                    </select>
                 </div>
 
                 <div class="m-2"> 
