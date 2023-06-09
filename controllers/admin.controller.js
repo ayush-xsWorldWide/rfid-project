@@ -336,7 +336,7 @@ exports.createEventHandler = async (req, res) => {
         mailerConfiramtion({
             email: req.body.email,
             message: `You have Successfully created a event called ${name}`,
-            link: req.headers.host + `/cregister/${name.replaceAll(" ", "-")}`
+            link: req.headers.host + `/cregister/${(name.replaceAll(" ", "-")).toUpperCase()}`
         });
 
         return res.render('admin/createEvent', {
