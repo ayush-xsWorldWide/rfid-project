@@ -153,3 +153,66 @@
                                                 </div>
                                             </div>
                                         </div>
+
+
+
+
+                                        // test for date of creation of event
+        const systemDate = new Date();
+        const EnteredDate = date.split('-');
+
+        // testing the year
+        if (systemDate.getUTCFullYear() > parseInt(EnteredDate[0])) {
+            // condition for back Date
+            return res.render('admin/createEvent', {
+                status: "Warning",
+                user: req.user.userid,
+                message: "Sorry we Cannot create event for previous year!",
+                data: {
+                    name: name,
+                    place: place,
+                    date: date,
+                    time: time,
+                    email: email,
+                    noexp: noexp
+                }
+            });
+        }
+        // console.log(systemDate.getUTCMonth() , parseInt(EnteredDate[1]))
+        // testing for month
+        if (systemDate.getUTCMonth() >= parseInt(EnteredDate[1])) {
+            // condition for back Date
+            return res.render('admin/createEvent', {
+                status: "Warning",
+                user: req.user.userid,
+                message: "Sorry we Cannot create event for previous Month!",
+                data: {
+                    name: name,
+                    place: place,
+                    date: date,
+                    time: time,
+                    email: email,
+                    noexp: noexp
+                }
+            });
+        }
+        // testing for day
+        // console.log(parseInt(EnteredDate[2]) , systemDate.getUTCDate(),EnteredDate[2] - systemDate.getUTCDate())
+        // console.log(systemDate.getUTCMonth() , parseInt(EnteredDate[1]) );
+        if ((systemDate.getUTCMonth() + 1) == parseInt(EnteredDate[1]) && (parseInt(EnteredDate[2]) - systemDate.getUTCDate()) < -1) {
+            // console.log("enter");
+            // condition for back Date
+            return res.render('admin/createEvent', {
+                status: "Warning",
+                user: req.user.userid,
+                message: "Sorry we Cannot create event for previous Date!",
+                data: {
+                    name: name,
+                    place: place,
+                    date: date,
+                    time: time,
+                    email: email,
+                    noexp: noexp
+                }
+            });
+        }

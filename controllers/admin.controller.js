@@ -263,69 +263,30 @@ exports.createEventHandler = async (req, res) => {
                 });
             }
         }
+        // date logic 
+        // date
+        const nowDate = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }).split('/').reverse().join('-');
+        
+        if(new Date(nowDate) > new Date(date))
+        {
+            return res.render('admin/createEvent', {
+                status: "Warning",
+                user: req.user.userid,
+                message: "Sorry we Cannot create event for back date!",
+                data: {
+                    name: name,
+                    place: place,
+                    date: date,
+                    time: time,
+                    email: email,
+                    noexp: noexp
+                }
+            });
+        }
 
-        // test for date of creation of event
-        const systemDate = new Date();
-        const EnteredDate = date.split('-');
-
-        // testing the year
-        if (systemDate.getUTCFullYear() > parseInt(EnteredDate[0])) {
-            // condition for back Date
-            return res.render('admin/createEvent', {
-                status: "Warning",
-                user: req.user.userid,
-                message: "Sorry we Cannot create event for previous year!",
-                data: {
-                    name: name,
-                    place: place,
-                    date: date,
-                    time: time,
-                    email: email,
-                    noexp: noexp
-                }
-            });
-        }
-        // console.log(systemDate.getUTCMonth() , parseInt(EnteredDate[1]))
-        // testing for month
-        if (systemDate.getUTCMonth() >= parseInt(EnteredDate[1])) {
-            // condition for back Date
-            return res.render('admin/createEvent', {
-                status: "Warning",
-                user: req.user.userid,
-                message: "Sorry we Cannot create event for previous Month!",
-                data: {
-                    name: name,
-                    place: place,
-                    date: date,
-                    time: time,
-                    email: email,
-                    noexp: noexp
-                }
-            });
-        }
-        // testing for day
-        // console.log(parseInt(EnteredDate[2]) , systemDate.getUTCDate(),EnteredDate[2] - systemDate.getUTCDate())
-        // console.log(systemDate.getUTCMonth() , parseInt(EnteredDate[1]) );
-        if ((systemDate.getUTCMonth() + 1) == parseInt(EnteredDate[1]) && (parseInt(EnteredDate[2]) - systemDate.getUTCDate()) < -1) {
-            // console.log("enter");
-            // condition for back Date
-            return res.render('admin/createEvent', {
-                status: "Warning",
-                user: req.user.userid,
-                message: "Sorry we Cannot create event for previous Date!",
-                data: {
-                    name: name,
-                    place: place,
-                    date: date,
-                    time: time,
-                    email: email,
-                    noexp: noexp
-                }
-            });
-        }
         // if()
         await Events.create({
-            name: (name.replaceAll(" ", "-")).toUpperCase(),
+            name: (name.replaceAll(" ", "-")).toUpperCase().trim(),
             place: place.toUpperCase(),
             date,
             time,
@@ -405,22 +366,22 @@ exports.search = async (req, res) => {
         places = [...new Set(places)];
 
         // filtration logic
-        
+
 
         // if from date is present and to date is absent
-        if(fromDate && toDate)
+        if (fromDate && toDate)
             data = data.filter(element => (new Date(fromDate) <= new Date(element.date)) && (new Date(toDate) >= new Date(element.date)));
-        else if(fromDate)
+        else if (fromDate)
             data = data.filter(element => new Date(fromDate) <= new Date(element.date));
-        else if(toDate)
+        else if (toDate)
             data = data.filter(element => new Date(toDate) >= new Date(element.date));
 
-        
+
         //name filter
-        if(eventNm)
-            data = data.filter(element => eventNm == element.name);
+        if (eventNm)
+            data = data.filter(element => eventNm.replaceAll(" ", "-") == element.name);
         // filter with place
-        if(place)
+        if (place)
             data = data.filter(element => place == element.place);
 
 

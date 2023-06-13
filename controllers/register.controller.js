@@ -38,11 +38,14 @@ exports.ActionRegisterPage = async (req, res) => {
     // console.log(name, email, phone, cardno, eventname);
     
     // check route
-    const data = await Events.find({});
+    var data = await Events.find({});
     let flag = false;
     data.forEach(element => {
         if (element.name == eventname)
+        {
             flag = true;
+            data = element
+        }
     })
     if (!flag) return res.redirect('/404');
     // check ends
@@ -132,12 +135,16 @@ exports.ActionRegisterPage = async (req, res) => {
         });
     }
     try {
+        // console.log(data.noexp);
+        var ExpArr = []
+        for(var i = 1; i <= data.noexp; i++) ExpArr.push("No");
         await Vistiter.create({
             name, 
             email, 
             phone, 
             cardno, 
-            eventname
+            eventname,
+            exp: ExpArr
         });
 
         mailer({

@@ -23,6 +23,10 @@ const visiter = mongoose.Schema({
         unique: true,
         required: true
     },
+    exp:{
+        type: [String],
+        default: []
+    },
     status:{
         type: String,
         default: "INACTIVE"
