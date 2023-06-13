@@ -383,9 +383,9 @@ exports.search = async (req, res) => {
             // console.log(data.filter(element => (element.name).includes(eventNm.replaceAll(" ", "-"))));
             // data = data.filter(element => eventNm.replaceAll(" ", "-") == element.name);
             eventNm = eventNm.trim().replaceAll(" ", "-").toUpperCase();
-            data = data.filter(element => (element.name).startsWith(eventNm));
-            if(data.length == 0)
-            data = data.filter(element => (element.name).includes(eventNm));
+            var copy = data.filter(element => (element.name).startsWith(eventNm));
+            if(copy.length == 0) data = data.filter(element => (element.name).includes(eventNm));
+            else data = copy;
         }
         // filter with place
         if (place)
