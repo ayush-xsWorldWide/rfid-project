@@ -357,7 +357,7 @@ exports.fetchEvents = async (req, res) => {
 
 exports.search = async (req, res) => {
     // var searchedItems = []
-    const { fromDate, toDate, eventNm, place } = req.body;
+    var { fromDate, toDate, eventNm, place } = req.body;
     // console.log(fromDate, toDate, eventNm, place);
     try {
         var data = await Events.find({});
@@ -379,7 +379,12 @@ exports.search = async (req, res) => {
 
         //name filter
         if (eventNm)
-            data = data.filter(element => eventNm.replaceAll(" ", "-") == element.name);
+        {
+            // console.log(data.filter(element => (element.name).includes(eventNm.replaceAll(" ", "-"))));
+            // data = data.filter(element => eventNm.replaceAll(" ", "-") == element.name);
+            eventNm = eventNm.trim().replaceAll(" ", "-").toUpperCase();
+            data = data.filter(element => (element.name).includes(eventNm));
+        }
         // filter with place
         if (place)
             data = data.filter(element => place == element.place);
