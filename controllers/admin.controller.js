@@ -383,7 +383,7 @@ exports.search = async (req, res) => {
             // console.log(data.filter(element => (element.name).includes(eventNm.replaceAll(" ", "-"))));
             // data = data.filter(element => eventNm.replaceAll(" ", "-") == element.name);
             eventNm = eventNm.trim().replaceAll(" ", "-").toUpperCase();
-            data = data.filter(element => (element.name).includes(eventNm));
+            data = data.filter(element => (element.name).startsWith(eventNm));
         }
         // filter with place
         if (place)
