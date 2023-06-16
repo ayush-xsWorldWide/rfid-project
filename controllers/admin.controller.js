@@ -294,10 +294,23 @@ exports.createEventHandler = async (req, res) => {
             noexp
         });
 
+        // write qr code
+        const generateQR = async text => {
+            try {
+                const toDataURL = promisify(QRCode.toDataURL);
+                const qrCodeDataURL = await toDataURL(text);
+                return qrCodeDataURL;
+            } catch (err) {
+                console.error(err)
+            }
+        }
+        var qr = await generateQR("http://" + req.headers.host + `/cregister/${(name.replaceAll(" ", "-")).toUpperCase()}`);
+        // console.log(qr);
         mailerConfiramtion({
             email: req.body.email,
             message: `You have Successfully created a event called ${name}`,
-            link: req.headers.host + `/cregister/${(name.replaceAll(" ", "-")).toUpperCase()}`
+            link: "http://" + req.headers.host + `/cregister/${(name.replaceAll(" ", "-")).toUpperCase()}`,
+            qr: qr
         });
 
         return res.render('admin/createEvent', {
@@ -314,6 +327,7 @@ exports.createEventHandler = async (req, res) => {
         });
     }
     catch (error) {
+        console.log(error);
         return res.render('admin/createEvent', {
             status: "Error",
             user: req.user.userid,
@@ -336,9 +350,23 @@ exports.fetchEvents = async (req, res) => {
         data.filter(element => places.push(element.place));
         places = [...new Set(places)];
 
+        var reg = await RegData.find({});
+
+        const newArray = data.map(obj => ({
+            // ...obj,  // Copy existing properties of the object
+            // newAttribute: 'some value'  // Add the new attribute
+            name: obj.name,
+            place: obj.place,
+            date: obj.date,
+            time: obj.time,
+            noexp: obj.noexp,
+            noActive: reg.filter(element => element.eventname === obj.name && element.status === "ACTIVE").length,
+            noReg: reg.filter(element => element.eventname === obj.name).length,
+        }));
+
         return res.render('admin/showEvents', {
             status: "",
-            data: data,
+            data: newArray,
             user: req.user.userid,
             places: places
         });
@@ -411,7 +439,7 @@ exports.links = async (req, res) => {
         var details = [];
 
         data.map(async (obj) => {
-            var hpyerlink = req.headers.host + `/cregister/${(obj.name.replaceAll(" ", "-")).toUpperCase()}`
+            var hpyerlink = "http://" + req.headers.host + `/cregister/${(obj.name.replaceAll(" ", "-")).toUpperCase()}`
             let linksData = {
                 name: obj.name,
                 link: hpyerlink,
@@ -451,7 +479,7 @@ exports.FetchQr = async (req, res) => {
         var details = [];
 
         data.map(async (obj) => {
-            var hpyerlink = req.headers.host + `/cregister/${(obj.name.replaceAll(" ", "-")).toUpperCase()}`
+            var hpyerlink = "http://" + req.headers.host + `/cregister/${(obj.name.replaceAll(" ", "-")).toUpperCase()}`
             let linksData = {
                 name: obj.name,
                 link: hpyerlink,
