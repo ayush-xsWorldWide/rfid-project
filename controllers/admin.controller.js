@@ -1,7 +1,8 @@
 const AdminCred = require('../model/adminCred');
 const RegData = require('../model/visiter');
 const Events = require('../model/event');
-
+var QRCode = require('qrcode');
+const { promisify } = require('util');
 const { mailerConfiramtion } = require('../utils/EventConfiramtion');
 
 // utils
@@ -266,9 +267,8 @@ exports.createEventHandler = async (req, res) => {
         // date logic 
         // date
         const nowDate = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Kolkata' }).split('/').reverse().join('-');
-        
-        if(new Date(nowDate) > new Date(date))
-        {
+
+        if (new Date(nowDate) > new Date(date)) {
             return res.render('admin/createEvent', {
                 status: "Warning",
                 user: req.user.userid,
@@ -378,13 +378,12 @@ exports.search = async (req, res) => {
 
 
         //name filter
-        if (eventNm)
-        {
+        if (eventNm) {
             // console.log(data.filter(element => (element.name).includes(eventNm.replaceAll(" ", "-"))));
             // data = data.filter(element => eventNm.replaceAll(" ", "-") == element.name);
             eventNm = eventNm.trim().replaceAll(" ", "-").toUpperCase();
             var copy = data.filter(element => (element.name).startsWith(eventNm));
-            if(copy.length == 0) data = data.filter(element => (element.name).includes(eventNm));
+            if (copy.length == 0) data = data.filter(element => (element.name).includes(eventNm));
             else data = copy;
         }
         // filter with place
@@ -402,5 +401,70 @@ exports.search = async (req, res) => {
     catch (error) {
         console.log("some error");
         res.redirect('/showevent');
+    }
+}
+
+
+exports.links = async (req, res) => {
+    try {
+        var data = await Events.find({});
+        var details = [];
+
+        data.map(async (obj) => {
+            var hpyerlink = req.headers.host + `/cregister/${(obj.name.replaceAll(" ", "-")).toUpperCase()}`
+            let linksData = {
+                name: obj.name,
+                link: hpyerlink,
+            };
+            details.push(linksData);
+        });
+
+        return res.render('admin/links', {
+            user: req.user.userid,
+            data: details,
+            qr: ''
+        });
+    }
+    catch (error) {
+        console.log(error);
+        console.log("Some error found!");
+    }
+}
+
+exports.FetchQr = async (req, res) => {
+    const { eventName } = req.params;
+    try {
+        const generateQR = async text => {
+            try {
+                const toDataURL = promisify(QRCode.toDataURL);
+                const qrCodeDataURL = await toDataURL(text);
+                return qrCodeDataURL;
+            } catch (err) {
+                console.error(err)
+            }
+        }
+        var link = req.headers.host + `/cregister/${eventName}`;
+        var qr = await generateQR(link);
+        // console.log(qr);
+
+        var data = await Events.find({});
+        var details = [];
+
+        data.map(async (obj) => {
+            var hpyerlink = req.headers.host + `/cregister/${(obj.name.replaceAll(" ", "-")).toUpperCase()}`
+            let linksData = {
+                name: obj.name,
+                link: hpyerlink,
+            };
+            details.push(linksData);
+        });
+        return res.render('admin/links', {
+            user: req.user.userid,
+            data: details,
+            qr: qr
+        });
+    }
+    catch (error) {
+        console.log("Some error occured");
     }
 }

@@ -1,0 +1,71 @@
+<%- include('../partials/header')%>
+    <%- include('navbar')%>
+
+        <div class="container mt-2">
+            <!-- <%= qr %>  -->
+            <% if(qr.length > 0 ){%>
+            <!-- Button trigger modal -->
+            <button type="button" id="press" style="display: none;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Launch demo modal
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">QR Code</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body w-100 d-flex justify-content-center align-items-center">
+                            <img src="<%=qr %>" alt="QR Code">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <% } %>
+            <table class="table table-striped" id="myTable">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Link</th>
+                        <th scope="col">QR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% var count=1 %>
+                        <% data.forEach(element=>{ %>
+                            <tr>
+                                <th scope="row">
+                                    <%=count %>
+                                </th>
+                                <td>
+                                    <%=element.name%>
+                                </td>
+                                <td>
+                                    <%=element.link%>
+                                </td>
+                                <td>
+                                    <!-- <%=element.qr %> -->
+                                    <a href="/links/<%=element.name %>" class="btn btn-primary">Get QR Code</a>
+                                </td>
+                            </tr>
+                            <% count+=1 %>
+                                <% }) %>
+                </tbody>
+            </table>
+        </div>
+        <script>
+            window.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('press').click();
+            });
+        </script>
+        <%- include('../partials/footer')%>
