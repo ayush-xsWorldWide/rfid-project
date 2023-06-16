@@ -443,7 +443,7 @@ exports.FetchQr = async (req, res) => {
                 console.error(err)
             }
         }
-        var link = req.headers.host + `/cregister/${eventName}`;
+        var link = "http://" + req.headers.host + `/cregister/${eventName}`;
         var qr = await generateQR(link);
         // console.log(qr);
 
