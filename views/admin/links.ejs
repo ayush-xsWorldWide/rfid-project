@@ -79,7 +79,7 @@
                 // Create an anchor element to initiate the download
                 var link = document.createElement('a');
                 link.href = imageUrl;
-                link.download = 'image.jpg'; // Specify the desired file name
+                link.download = `${(window.location.href).slice((window.location.href).lastIndexOf("/")+1, (window.location.href).length)}.jpg`; // Specify the desired file name
 
                 // Trigger the download
                 link.click();
