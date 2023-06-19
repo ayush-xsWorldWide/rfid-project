@@ -15,6 +15,9 @@ const cardController = require('../controllers/card.controller');
 // product controller 
 const productController = require('../controllers/product.controller');
 
+// experience controller
+const experienceController = require('../controllers/experience.controller');
+
 app.get('/health', (req, res) => {
     return res.send("HI from server");
 })
@@ -54,6 +57,9 @@ app.post('/search', auth.isAuthenticated, adminController.search)
 
 app.get('/links', auth.isAuthenticated, adminController.links);
 app.get('/links/:eventName', auth.isAuthenticated, adminController.FetchQr);
+
+// experience
+app.get('/getexp/:expid/:cardno', experienceController.getExp);
 
 // 404
 app.get('/404', (req, res) => {

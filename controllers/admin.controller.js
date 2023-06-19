@@ -134,7 +134,7 @@ exports.ActionLogout = (req, res) => {
 exports.findAllRegstration = async (req, res) => {
     try {
         const data = await RegData.find({ eventname: req.params.eventname });
-        // console.log(data);
+        console.log(data);
         return res.render('admin/showreg', {
             data: data,
             user: req.user.userid,
