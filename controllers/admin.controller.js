@@ -9,6 +9,7 @@ const { mailerConfiramtion } = require('../utils/EventConfiramtion');
 const { decrypt } = require("../utils/crypt");
 const { generateToken } = require("../utils/token");
 const { set } = require('mongoose');
+const { name } = require('ejs');
 
 exports.LoginPage = (req, res) => {
     return res.render('admin/login', {
@@ -327,11 +328,11 @@ exports.createEventHandler = async (req, res) => {
         });
     }
     catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.render('admin/createEvent', {
             status: "Error",
             user: req.user.userid,
-            message: "Server error!",
+            message: "Event with this name already exist",
             data: {
                 name: '',
                 place: '',

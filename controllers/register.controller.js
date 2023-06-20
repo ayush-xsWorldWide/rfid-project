@@ -15,10 +15,10 @@ exports.showRegisterPage = async (req, res) => {
             return res.render('register', {
                 status: '',
                 eventname: req.params.eventname,
-                data:{
-                    name: '', 
-                    email: '', 
-                    phone: '', 
+                data: {
+                    name: '',
+                    email: '',
+                    phone: '',
                     cardno: ''
                 }
             });
@@ -36,13 +36,12 @@ exports.ActionRegisterPage = async (req, res) => {
 
     // console.log(eventname);
     // console.log(name, email, phone, cardno, eventname);
-    
+
     // check route
     var data = await Events.find({});
     let flag = false;
     data.forEach(element => {
-        if (element.name == eventname)
-        {
+        if (element.name == eventname) {
             flag = true;
             data = element
         }
@@ -56,10 +55,10 @@ exports.ActionRegisterPage = async (req, res) => {
                 status: 'Warning',
                 message: "Enter the name to proceed",
                 eventname: eventname,
-                data:{
-                    name: name, 
-                    email: email, 
-                    phone: phone, 
+                data: {
+                    name: name,
+                    email: email,
+                    phone: phone,
                     cardno: cardno
                 }
             });
@@ -70,10 +69,10 @@ exports.ActionRegisterPage = async (req, res) => {
                 status: 'Warning',
                 message: "Enter the email to proceed",
                 eventname: eventname,
-                data:{
-                    name: name, 
-                    email: email, 
-                    phone: phone, 
+                data: {
+                    name: name,
+                    email: email,
+                    phone: phone,
                     cardno: cardno
                 }
             });
@@ -84,10 +83,10 @@ exports.ActionRegisterPage = async (req, res) => {
                 status: 'Warning',
                 message: "Enter your phone number to proceed",
                 eventname: eventname,
-                data:{
-                    name: name, 
-                    email: email, 
-                    phone: phone, 
+                data: {
+                    name: name,
+                    email: email,
+                    phone: phone,
                     cardno: cardno
                 }
             });
@@ -98,10 +97,10 @@ exports.ActionRegisterPage = async (req, res) => {
                 status: 'Warning',
                 message: "Enter the card number to proceed",
                 eventname: eventname,
-                data:{
-                    name: name, 
-                    email: email, 
-                    phone: phone, 
+                data: {
+                    name: name,
+                    email: email,
+                    phone: phone,
                     cardno: cardno
                 }
 
@@ -113,10 +112,10 @@ exports.ActionRegisterPage = async (req, res) => {
             status: 'Warning',
             message: "please select the event before you go!",
             eventname: eventname,
-            data:{
-                name: name, 
-                email: email, 
-                phone: phone, 
+            data: {
+                name: name,
+                email: email,
+                phone: phone,
                 cardno: cardno
             }
         });
@@ -126,23 +125,69 @@ exports.ActionRegisterPage = async (req, res) => {
             status: 'Warning',
             message: "The phone number should be of 10 Digits",
             eventname: eventname,
-            data:{
-                name: name, 
-                email: email, 
-                phone: phone, 
+            data: {
+                name: name,
+                email: email,
+                phone: phone,
                 cardno: cardno
             }
         });
     }
     try {
         // console.log(data.noexp);
+        var previousDetails = await Vistiter.find({ eventname: eventname });
+        // var nameCheck = previousCardDetails.filter(element => element.name === name);
+        if (previousDetails.filter(element => element.email === email).length > 0) {
+            return res.render('register', {
+                status: 'Warning',
+                message: "Email already exist!",
+                eventname: eventname,
+                data: {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    cardno: cardno
+                }
+            });
+        }
+        if(previousDetails.filter(element => element.phone === phone).length > 0)
+        {
+            return res.render('register', {
+                status: 'Warning',
+                message: "Number already exist!",
+                eventname: eventname,
+                data: {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    cardno: cardno
+                }
+            });
+        }
+        // previousDetails = previousDetails.filter(element => element.status === "ACTIVE");
+        if(previousDetails.filter(element => element.status === "ACTIVE").length > 0)
+        {
+            return res.render('register', {
+                status: 'Warning',
+                message: "Card is Already active!",
+                eventname: eventname,
+                data: {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    cardno: cardno
+                }
+            });
+        }
+        
+        // all condn statify!
         var ExpArr = []
-        for(var i = 1; i <= data.noexp; i++) ExpArr.push("No");
+        for (var i = 1; i <= data.noexp; i++) ExpArr.push("No");
         await Vistiter.create({
-            name, 
-            email, 
-            phone, 
-            cardno, 
+            name,
+            email,
+            phone,
+            cardno,
             eventname,
             exp: ExpArr
         });
@@ -154,10 +199,10 @@ exports.ActionRegisterPage = async (req, res) => {
         return res.render('register', {
             status: 'Success',
             eventname: eventname,
-            data:{
-                name: '', 
-                email: '', 
-                phone: '', 
+            data: {
+                name: '',
+                email: '',
+                phone: '',
                 cardno: ''
             }
         });
@@ -169,10 +214,10 @@ exports.ActionRegisterPage = async (req, res) => {
                 status: 'Error',
                 message: `${Object.keys(error.keyPattern)} already Exist!`,
                 eventname: eventname,
-                data:{
-                    name: name, 
-                    email: email, 
-                    phone: phone, 
+                data: {
+                    name: name,
+                    email: email,
+                    phone: phone,
                     cardno: cardno
                 }
             });

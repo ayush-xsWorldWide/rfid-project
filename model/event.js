@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const events = mongoose.Schema({
     name: {
-        type: String
+        type: String,
+        unique: true
     },
     email:{
         type: String

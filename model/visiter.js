@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const visiter = mongoose.Schema({
     email: {
         type: String,
-        unique: true,
+        // unique: true,
         required: true
     },
     name: {
@@ -15,12 +15,11 @@ const visiter = mongoose.Schema({
     },
     phone: {
         type: String,
-        unique: true,
+        // unique: true,
         required: true
     },
     cardno: {
         type: String,
-        unique: true,
         required: true
     },
     exp:{
