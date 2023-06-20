@@ -2,7 +2,8 @@ const nodemailer = require("nodemailer");
 
 // async..await is not allowed in global scope, must use a wrapper
 exports.mailerConfiramtion = async (data) => {
-    console.log(process.env.PASSWORD);
+    // console.log(process.npmenv.PASSWORD);
+    // console.log(data.qr);
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -18,6 +19,14 @@ exports.mailerConfiramtion = async (data) => {
     let info = await transporter.sendMail({
         from: '"Registration Sucessfull" <ayush.iot@xsproductions.com>', // sender address
         to: data.email, // list of receivers
+        attachDataUrls: true,
+        attachments: [
+            {   // encoded string as an attachment
+                filename: 'QrCode.jpg',
+                content: (data.qr).split("base64,")[1],
+                encoding: 'base64'
+            }
+        ],
         subject: "Event Creation Sucessfull!", // Subject line
         // text: "Hello world?", // plain text body
         html: `
@@ -82,11 +91,17 @@ exports.mailerConfiramtion = async (data) => {
                                               <br>
                                               <br>
                                               <br>
+
+                                              <tr>
+                                                <td>
+                                                    <img src=${data.qr} />
+                                                </td>
+                                              </tr>
+
                                               <tr>
                                                 <td>
                                                     <br>
                                                     <center><a href=${"http://" + data.link} style="background-color: #7b38d8;padding: 10px;color: #ffffff;text-align: center;">Click me!</a></center>
-
                                                   <br>
                                                   <br>
                                                   <span style="color: black;font-size:30px;">${data.link}<span>
