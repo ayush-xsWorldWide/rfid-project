@@ -37,7 +37,7 @@ app.get('/logout', adminController.ActionLogout);
 app.get('/dashboard', auth.isAuthenticated, adminController.showDashboard);
 app.get('/showreg/:eventname', auth.isAuthenticated, adminController.findAllRegstration);
 
-app.get('/cardstatus/:cardno', cardController.UpdateStatus);
+app.get('/cardstatus/:eventname/:cardno', cardController.UpdateStatus);
 
 
 // create event
@@ -59,7 +59,7 @@ app.get('/links', auth.isAuthenticated, adminController.links);
 app.get('/links/:eventName', auth.isAuthenticated, adminController.FetchQr);
 
 // experience
-app.get('/getexp/:expid/:cardno', experienceController.getExp);
+app.get('/getexp/:eventname/:expid/:cardno', experienceController.getExp);
 
 // 404
 app.get('/404', (req, res) => {

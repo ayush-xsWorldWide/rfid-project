@@ -1,10 +1,10 @@
 const Vistiter = require('../model/visiter');
 const { mailer } = require('../utils/mailer');
 exports.UpdateStatus = async (req, res) => {
-    const { cardno } = req.params;
+    const { eventname, cardno } = req.params;
     console.log(cardno);
     try {
-        const data = await Vistiter.findOne({ cardno });
+        const data = await Vistiter.findOne({ eventname: eventname, cardno: cardno });
         if (data) {
             if (data.status == "INACTIVE") {
                 data.status = "ACTIVE";
