@@ -497,3 +497,16 @@ exports.FetchQr = async (req, res) => {
         console.log("Some error occured");
     }
 }
+
+exports.deleteRegistration = async (req, res) => {
+    const { eventname, id } = req.params;
+    // console.log(eventname, id);
+    try {
+        await RegData.deleteOne({ _id: id });
+        res.redirect(`/showreg/${eventname}`);
+    }
+    catch (error) {
+        console.log("Some error occured");
+        res.redirect('/404');
+    }
+}

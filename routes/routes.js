@@ -35,7 +35,10 @@ app.post('/alogin', adminController.ActionLogin);
 app.get('/logout', adminController.ActionLogout);
 
 app.get('/dashboard', auth.isAuthenticated, adminController.showDashboard);
+
 app.get('/showreg/:eventname', auth.isAuthenticated, adminController.findAllRegstration);
+//new route
+app.get('/showreg/:eventname/:id', auth.isAuthenticated, adminController.deleteRegistration);
 
 app.get('/cardstatus/:eventname/:cardno', cardController.UpdateStatus);
 
