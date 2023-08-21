@@ -165,7 +165,8 @@ exports.ActionRegisterPage = async (req, res) => {
             });
         }
         // previousDetails = previousDetails.filter(element => element.status === "ACTIVE");
-        if(previousDetails.filter(element => element.status === "ACTIVE").length > 0)
+        
+        if(previousDetails.filter(element => element.cardno === cardno && element.status === "ACTIVE").length > 0)
         {
             return res.render('register', {
                 status: 'Warning',
